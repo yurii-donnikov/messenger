@@ -1,0 +1,33 @@
+.authBtn {
+  display: block;
+  button {
+    margin: 40px 50% !important;
+    transform: translate(-50%, 0px) !important;
+    width: 200px;
+  }
+}
+.logoutBtn {
+  width: 70%;
+  @media screen and (max-width: 830px) {
+    width: auto;
+  }
+
+  button {
+    float: right;
+    padding: 0 15px !important;
+    border-radius: 20px !important;
+
+    color: #000 !important;
+    box-shadow: none !important;
+    background-color: #e5e5e5 !important;
+    border: 1px solid #000 !important;
+    div {
+      display: none;
+    }
+    span {
+      text-align: center;
+      padding: 5px 10px !important;
+      font-size: 15px;
+    }
+  }
+}

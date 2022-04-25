@@ -1,0 +1,41 @@
+.chats__wrapper {
+  box-sizing: border-box;
+  margin: 10px 0 10px 0;
+  width: 100%;
+  display: flex;
+  position: relative;
+  border-bottom: 1px solid #979797;
+  height: 80px;
+  overflow: hidden;
+  .chats__avatar {
+    width: 15%;
+    height: max-content;
+    position: relative;
+    top: 50%;
+    transform: translate(0, -50%);
+    border-radius: 60px;
+    @media screen and (max-width: 830px) {
+      width: 10%;
+    }
+  }
+  .chats__txt {
+    width: 55%;
+    overflow: hidden;
+    padding: 16px 0 0 10px;
+
+    p {
+      margin: 0;
+    }
+    .chats__lastMessage {
+      height: 30px;
+      overflow: hidden;
+      color: #6c6c6c;
+      font-size: 14px;
+    }
+  }
+  .chats__date {
+    width: 30%;
+    text-align: end;
+    font-size: 13px;
+  }
+}

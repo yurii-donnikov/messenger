@@ -1,0 +1,42 @@
+.chat__input {
+  display: block;
+  position: relative;
+  overflow: hidden;
+  box-sizing: border-box;
+  height: 25%;
+  .input__wrapper {
+    position: relative;
+    height: fit-content;
+    display: block;
+    padding: 0 5%;
+    .input__newMessage {
+      display: block;
+      width: 100%;
+      position: relative;
+      left: 50%;
+      transform: translate(-50%, 0%);
+      height: 60px;
+      box-sizing: border-box;
+      padding: 10px 100px 10px 10px;
+      border-radius: 15px;
+      resize: none;
+    }
+    .input__btn {
+      display: block;
+      position: absolute;
+      top: 50%;
+      transform: translate(0, -50%);
+      right: 60px;
+      width: 80px;
+      cursor: pointer;
+      border-radius: 25px;
+      height: 40px;
+    }
+    .btn__error {
+      display: none;
+    }
+  }
+  .txt__works {
+    display: none;
+  }
+}
