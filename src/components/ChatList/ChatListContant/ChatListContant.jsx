@@ -1,12 +1,12 @@
 import style from "./ChatListContant.module.scss";
 import React from "react";
 import { useDispatch } from "react-redux";
-import { CHAT_BOARD } from "../../../Redux/chatBoard/chatBoardTypes";
+import { takeChatInfo } from "../../../Redux/chatBoard/chatBoardActions";
 
 function ChatListContant({ listItem: listItem, setActivePage: setActivePage }) {
   let dispatch = useDispatch();
   const collectUserInfo = () => {
-    dispatch({ type: CHAT_BOARD, payload: listItem });
+    dispatch(takeChatInfo(listItem));
     setActivePage(false);
   };
   let date;

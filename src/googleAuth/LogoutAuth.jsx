@@ -1,7 +1,7 @@
 import { GoogleLogout } from "react-google-login";
 import { useDispatch } from "react-redux";
 import style from "./style.module.scss";
-import { LOGOUT_SUCCESS } from "../Redux/auth/authTypes";
+import { logoutSuccess } from "../Redux/auth/authActions";
 
 const clientId =
   "155278585215-dtgvviefee9250oaeogb7man5h7knonh.apps.googleusercontent.com";
@@ -9,7 +9,7 @@ const clientId =
 function LogoutAuth() {
   const dispatch = useDispatch();
   const onLogoutSuccess = () => {
-    dispatch({ type: LOGOUT_SUCCESS });
+    dispatch(logoutSuccess());
   };
   return (
     <div className={style.logoutBtn} id="signInButton">

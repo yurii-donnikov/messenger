@@ -26,15 +26,17 @@ function FormSendMessage({ usersChat: usersChat, setUsersChat: setUsersChat }) {
       id: Math.random(),
     };
     let storage = JSON.parse(localStorage.getItem("staticData"));
+    let itemStorage;
     storage.forEach((chatItem) => {
       if (chatItem.id === item.id) {
         chatItem.chat.push(incomingMessage);
+        itemStorage = chatItem;
       }
     });
     localStorage.setItem("staticData", JSON.stringify(storage));
     item.chat.push(incomingMessage);
-    let copyItem = cloneDeep(item);
-    setUsersChat(copyItem);
+    let copyStorage = cloneDeep(itemStorage);
+    setUsersChat(copyStorage);
     renderChat();
   };
 
@@ -50,21 +52,23 @@ function FormSendMessage({ usersChat: usersChat, setUsersChat: setUsersChat }) {
           date: new Date(),
           id: Math.random(),
         };
-        StatisDataIn.forEach((item) => {
-          if (item.id === usersChat.id) {
+        StatisDataIn.forEach((data) => {
+          if (data.id === usersChat.id) {
             let storage = JSON.parse(localStorage.getItem("staticData"));
+            let itemStorage;
             storage.forEach((chatItem) => {
               if (chatItem.id === usersChat.id) {
                 chatItem.chat.push(newMessage);
+                itemStorage = chatItem;
               }
             });
             localStorage.setItem("staticData", JSON.stringify(storage));
-            item.chat.push(newMessage);
-            let copyItem = cloneDeep(item);
-            setUsersChat(copyItem);
+            data.chat.push(newMessage);
+            let copyStorage = cloneDeep(itemStorage);
+            setUsersChat(copyStorage);
             renderChat();
             const incomingMessage = () => {
-              processIncomingMessage(item);
+              processIncomingMessage(data);
             };
             if (!fetchErrors) {
               setTimeout(incomingMessage, 2000);

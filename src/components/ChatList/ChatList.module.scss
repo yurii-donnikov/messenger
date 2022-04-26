@@ -1,7 +1,7 @@
 .chatList__wrapper {
   display: block;
   width: 30%;
-  height: 100vh;
+  //height: 100vh;
   background-color: #f6f6f6;
   box-sizing: border-box;
   @media screen and (max-width: 830px) {
@@ -38,6 +38,9 @@
         width: 80%;
         @media screen and (max-width: 830px) {
           width: 90%;
+        }
+        @media screen and (max-width: 400px) {
+          width: 70%;
         }
       }
       .searchWrapper__img {

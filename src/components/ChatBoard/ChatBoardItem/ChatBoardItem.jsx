@@ -30,4 +30,5 @@ function ChatBoardItem({
     </div>
   );
 }
+
 export default ChatBoardItem;

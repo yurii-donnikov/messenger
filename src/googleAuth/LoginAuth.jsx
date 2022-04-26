@@ -1,7 +1,7 @@
 import { GoogleLogin } from "react-google-login";
 import style from "./style.module.scss";
 import { useDispatch } from "react-redux";
-import { LOGIN_SUCCESS } from "../Redux/auth/authTypes";
+import { loginSuccess } from "../Redux/auth/authActions";
 
 const clientId =
   "155278585215-dtgvviefee9250oaeogb7man5h7knonh.apps.googleusercontent.com";
@@ -9,7 +9,7 @@ const clientId =
 function LoginAuth() {
   const dispatch = useDispatch();
   const onSuccess = (res) => {
-    dispatch({ type: LOGIN_SUCCESS, payload: res.profileObj });
+    dispatch(loginSuccess(res.profileObj));
   };
   const onFailure = (res) => {
     console.log("Login failed res: ", res);
