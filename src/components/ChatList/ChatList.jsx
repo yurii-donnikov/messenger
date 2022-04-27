@@ -1,11 +1,11 @@
 import React, { useState, useRef, useEffect } from "react";
 import ChatListContant from "./ChatListContant/ChatListContant";
 import style from "./ChatList.module.scss";
-import search from "../../images/search.svg";
 import StatisDataIn from "../../StatisDataIn";
 import { cloneDeep } from "lodash";
 import { useDispatch } from "react-redux";
 import { saveUsersChat } from "../../Redux/chatList/chatListActions";
+import ChatListHeader from "./ChatListHeader/ChatListHeader";
 
 function ChatList({ activePage: activePage, setActivePage: setActivePage }) {
   let dispatch = useDispatch();
@@ -52,28 +52,13 @@ function ChatList({ activePage: activePage, setActivePage: setActivePage }) {
     dispatch(saveUsersChat(renderChatList));
   }, []);
 
+  const visiblePage = !activePage
+    ? `${style.chatList__wrapper} + ' ' + ${style.chatList__wrapper_mobile}`
+    : style.chatList__wrapper;
+
   return (
-    <div
-      className={
-        !activePage
-          ? `${style.chatList__wrapper} + ' ' + ${style.chatList__wrapper_mobile}`
-          : style.chatList__wrapper
-      }
-    >
-      <div className={style.searchWrapper}>
-        <label htmlFor="inputSearch">
-          <input
-            className={style.searchWrapper__input}
-            onKeyUp={findUser}
-            ref={inputRef}
-            type="text"
-            placeholder="Search chat"
-            id="inputSearch"
-          />
-          <img className={style.searchWrapper__img} src={search} alt="" />
-        </label>
-      </div>
-      <p className={style.chatList__title}>Chats</p>
+    <div className={visiblePage}>
+      <ChatListHeader findUser={findUser} inputRef={inputRef} />
       <div className={style.chatList__list}>
         {desiredUsers.map((listItem) => {
           return (

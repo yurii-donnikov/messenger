@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import { chatInfo } from "../../Redux/chatBoard/chatBoardSelectors";
 import React, { useEffect, useState } from "react";
 import ChatBoardItem from "./ChatBoardItem/ChatBoardItem";
+import ChatBoardStart from "./ChatBoardStart/ChatBoardStart";
 
 function ChatBoard({ activePage: activePage, setActivePage: setActivePage }) {
   const chatInform = useSelector(chatInfo);
@@ -10,22 +11,18 @@ function ChatBoard({ activePage: activePage, setActivePage: setActivePage }) {
   useEffect(() => {
     setUsersChat(chatInform);
   }, [chatInform]);
+  const visiblePage = !activePage
+    ? `${style.chatBoard} + ' ' + ${style.chatBoard_mobile}`
+    : style.chatBoard;
 
   return (
-    <div
-      className={
-        !activePage
-          ? `${style.chatBoard} + ' ' + ${style.chatBoard_mobile}`
-          : style.chatBoard
-      }
-    >
+    <div className={visiblePage}>
       {!usersChat ? (
-        <p className={style.chatBoard__txtTitle}>open chat</p>
+        <ChatBoardStart />
       ) : (
         <ChatBoardItem
           usersChat={usersChat}
           setUsersChat={setUsersChat}
-          activePage={activePage}
           setActivePage={setActivePage}
         />
       )}

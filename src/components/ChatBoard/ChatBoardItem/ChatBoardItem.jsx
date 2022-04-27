@@ -2,11 +2,11 @@ import style from "./ChatBoardItem.module.scss";
 import MessagesChatBoard from "./MessagesChatBoard/MessagesChatBoard";
 import React from "react";
 import FormSendMessage from "./FormSendMessage/FormSendMessage";
+import ChatBoardHeader from "./ChatBoardHeader/ChatBoardHeader";
 
 function ChatBoardItem({
   usersChat: usersChat,
   setUsersChat: setUsersChat,
-  activePage: activePage,
   setActivePage: setActivePage,
 }) {
   const returnChatList = () => {
@@ -14,13 +14,7 @@ function ChatBoardItem({
   };
   return (
     <div className={style.board__wrapper}>
-      <div className={style.board__header}>
-        <img src={usersChat.image} alt="user_icon" />
-        <p>{usersChat.name}</p>
-      </div>
-      <button onClick={returnChatList} className={style.board__btnReturn}>
-        return
-      </button>
+      <ChatBoardHeader usersChat={usersChat} returnChatList={returnChatList} />
       <div className={style.chat}>
         {usersChat.chat.map((message) => {
           return <MessagesChatBoard key={message.id} message={message} />;

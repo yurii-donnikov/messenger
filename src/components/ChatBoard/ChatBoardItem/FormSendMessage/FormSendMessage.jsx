@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import { useFormik } from "formik";
-import style from "./FormSendMessage.module.scss";
 import StatisDataIn from "../../../../StatisDataIn";
 import { cloneDeep } from "lodash";
 import { useSelector, useDispatch } from "react-redux";
@@ -8,6 +7,8 @@ import { chatRender } from "../../../../Redux/chatList/chatListSelectors";
 import { fetchNewMessage } from "../../../../Redux/Thunk/thunkFetch";
 import { featchInfo } from "../../../../Redux/Thunk/thunkSelectors";
 import { featchError } from "../../../../Redux/Thunk/thunkSelectors";
+import FormContant from "./FormContant/FormContant";
+import RequestError from "./RequestError/RequestError";
 
 function FormSendMessage({ usersChat: usersChat, setUsersChat: setUsersChat }) {
   const renderChat = useSelector(chatRender);
@@ -19,25 +20,27 @@ function FormSendMessage({ usersChat: usersChat, setUsersChat: setUsersChat }) {
   }, []);
 
   const processIncomingMessage = (item) => {
-    const incomingMessage = {
-      sender: "companion",
-      message: fetchInform.value,
-      date: new Date(),
-      id: Math.random(),
+    return function () {
+      const incomingMessage = {
+        sender: "companion",
+        message: fetchInform.value,
+        date: new Date(),
+        id: Math.random(),
+      };
+      let storage = JSON.parse(localStorage.getItem("staticData"));
+      let itemStorage;
+      storage.forEach((chatItem) => {
+        if (chatItem.id === item.id) {
+          chatItem.chat.push(incomingMessage);
+          itemStorage = chatItem;
+        }
+      });
+      localStorage.setItem("staticData", JSON.stringify(storage));
+      item.chat.push(incomingMessage);
+      let copyStorage = cloneDeep(itemStorage);
+      setUsersChat(copyStorage);
+      renderChat();
     };
-    let storage = JSON.parse(localStorage.getItem("staticData"));
-    let itemStorage;
-    storage.forEach((chatItem) => {
-      if (chatItem.id === item.id) {
-        chatItem.chat.push(incomingMessage);
-        itemStorage = chatItem;
-      }
-    });
-    localStorage.setItem("staticData", JSON.stringify(storage));
-    item.chat.push(incomingMessage);
-    let copyStorage = cloneDeep(itemStorage);
-    setUsersChat(copyStorage);
-    renderChat();
   };
 
   const formik = useFormik({
@@ -67,11 +70,8 @@ function FormSendMessage({ usersChat: usersChat, setUsersChat: setUsersChat }) {
             let copyStorage = cloneDeep(itemStorage);
             setUsersChat(copyStorage);
             renderChat();
-            const incomingMessage = () => {
-              processIncomingMessage(data);
-            };
             if (!fetchErrors) {
-              setTimeout(incomingMessage, 2000);
+              setTimeout(processIncomingMessage(data), 2000);
               dispatch(fetchNewMessage());
             }
           }
@@ -81,27 +81,7 @@ function FormSendMessage({ usersChat: usersChat, setUsersChat: setUsersChat }) {
     },
   });
 
-  return !fetchErrors ? (
-    <div className={style.chat__input}>
-      <form className={style.input__wrapper} onSubmit={formik.handleSubmit}>
-        <textarea
-          className={style.input__newMessage}
-          id="message"
-          name="message"
-          required
-          type="text"
-          placeholder="Write your message"
-          onChange={formik.handleChange}
-          value={formik.values.message}
-        ></textarea>
-        <button className={style.input__btn} type="submit">
-          send
-        </button>
-      </form>
-    </div>
-  ) : (
-    <p className={style.txt__error}>request error..</p>
-  );
+  return !fetchErrors ? <FormContant formik={formik} /> : <RequestError />;
 }
 
 export default FormSendMessage;
